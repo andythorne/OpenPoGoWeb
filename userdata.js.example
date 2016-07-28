@@ -4,4 +4,5 @@ var users = ["username"];
 var userZoom = true;
 var userFollow = true;
 var imageExt = ".png";
+var walkPath = true;
 var gMapsAPIKey = "YOUR_API_KEY_HERE";

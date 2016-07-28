@@ -92,6 +92,7 @@ function initMap() {
   document.getElementById('switchPan').checked = userFollow;
   document.getElementById('switchZoom').checked = userZoom;
   document.getElementById('imageType').checked = (imageExt != '.png');
+  document.getElementById('switchWalkPath').checked = walkPath;
   setTimeout(function(){
     placeTrainer();
     addCatchable();
@@ -126,6 +127,14 @@ $('#imageType').change(function(){
       imageExt = '.gif';
     } else {
       imageExt = '.png';
+    }
+});
+
+$('#switchWalkPath').change(function(){
+    if (this.checked) {
+      walkPath = true;
+    } else {
+      walkPath = false;
     }
 });
 
@@ -254,9 +263,29 @@ var trainerFunc = function(data, user_index) {
       zIndex: 2,
       label: users[user_index]
     });
+    user_data[users[user_index]].walkPath = new google.maps.Polyline({
+      map: map,
+      path: [
+        {lat: parseFloat(data.lat), lng: parseFloat(data.lng)}
+      ],
+      geodesic: true,
+      strokeColor: '#FF0000',
+      strokeOpacity: 1.0,
+      strokeWeight: 2
+    });
   } else {
     user_data[users[user_index]].marker.setPosition({lat: parseFloat(data.lat), lng: parseFloat(data.lng)});
+    user_data[users[user_index]].walkPath.getPath().push(
+      new google.maps.LatLng({lat: parseFloat(data.lat), lng: parseFloat(data.lng)})
+    );
   }
+
+  if(walkPath){
+    user_data[users[user_index]].walkPath.setVisible(true);
+  } else {
+    user_data[users[user_index]].walkPath.setVisible(false);
+  }
+
   if (users.length === 1 && userZoom === true) {
     map.setZoom(16);
   }
