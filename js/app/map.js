@@ -616,7 +616,7 @@ define(["jquery", "app/logger", "settings"], function(jQuery, logger, settings) 
               lat: parseFloat(coords.lat),
               lng: parseFloat(coords.lng)
             });
-            if (self.pathcoords[user_id].length === 2) {
+            if (self.pathcoords[user_id].length === 1) {
               self.user_data[user_id].trainerPath = new google.maps.Polyline({
                 map: self.map,
                 path: self.pathcoords[user_id],
